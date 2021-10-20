@@ -1,3 +1,4 @@
+package subasta;
 
 public class InformacionProducto {
 

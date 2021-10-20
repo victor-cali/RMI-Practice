@@ -1,3 +1,5 @@
+package subasta;
+
 public class InformacionOferta {
 
     String comprador;

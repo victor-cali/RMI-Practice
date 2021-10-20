@@ -1,3 +1,5 @@
+package subasta;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -14,7 +16,7 @@ public class Principal {
         try {
             
             Registry registry = LocateRegistry.getRegistry(host);
-            InterfazSubasta stub = (InterfazSubasta) registry.lookup("Hello");
+            InterfazSubasta stub = (InterfazSubasta) registry.lookup("SubastaModelo");
 
             vista = new SubastaVista();
             modelo = stub;

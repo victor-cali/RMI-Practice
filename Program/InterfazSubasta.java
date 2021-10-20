@@ -1,3 +1,4 @@
+package subasta;
 
 import java.rmi.*;
 import java.util.Vector;

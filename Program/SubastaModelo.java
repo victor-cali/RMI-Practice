@@ -1,3 +1,5 @@
+package subasta;
+
 import java.rmi.*;
 import java.rmi.server.*;
 import java.rmi.registry.LocateRegistry;
@@ -6,7 +8,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 
-public class SubastaModelo extends UnicastRemoteObject implements InterfazSubasta{
+public class SubastaModelo implements InterfazSubasta{
 
     Hashtable<String,String> usuarios;
     Hashtable<String,InformacionProducto> productos;
