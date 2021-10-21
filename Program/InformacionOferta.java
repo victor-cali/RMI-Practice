@@ -1,4 +1,4 @@
-package subasta;
+package my.subasta;
 
 public class InformacionOferta {
 

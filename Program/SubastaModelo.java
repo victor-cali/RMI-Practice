@@ -1,4 +1,4 @@
-package subasta;
+package my.subasta;
 
 import java.rmi.*;
 import java.rmi.server.*;

@@ -1,13 +1,14 @@
-package subasta;
+package my.subasta;
+import java.io.Serializable;
 
-public class InformacionProducto {
+public class InformacionProducto implements Serializable {
 
     String vendedor;
     String producto;
     float precioInicial;
     float precioActual;
 
-    public InformacionProducto( String v, String p, float pi ) {
+    public InformacionProducto( String v, String p, float pi )  {
 
         vendedor = v;
         producto = p;
