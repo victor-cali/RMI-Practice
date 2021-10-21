@@ -10,6 +10,6 @@ javac -d . Program/*.java
 
 ```
 rmiregistry
-java -Djava.security.policy=server.policy -Djava.rmi.server.codebase=file:/RMI-Practice/ subasta.SubastaModelo
-java -Djava.security.policy=server.policy -Djava.rmi.server.codebase=file:/RMI-Practice/ subasta.Principal
+java -Djava.security.policy=server.policy -Djava.rmi.server.codebase=file:/RMI-Practice/ my.subasta.SubastaModelo
+java -Djava.security.policy=server.policy -Djava.rmi.server.codebase=file:/RMI-Practice/ my.subasta.Principal
 ```
