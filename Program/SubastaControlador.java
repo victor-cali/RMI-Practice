@@ -1,3 +1,4 @@
+package my.subasta;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -10,17 +11,20 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
+import java.rmi.RemoteException;
+
 
 public class SubastaControlador implements ActionListener, ListSelectionListener {
 
     SubastaVista vista;
-    SubastaModelo modelo;
+    InterfazSubasta modelo;
     Hashtable <String,String> listaConPrecios;
 
-    public SubastaControlador( SubastaVista v, SubastaModelo m ) {
+    public SubastaControlador( SubastaVista v, InterfazSubasta m ) {
 
         vista = v;
         modelo = m;
+
     }
 
     public void actionPerformed( ActionEvent evento ) {
@@ -32,34 +36,63 @@ public class SubastaControlador implements ActionListener, ListSelectionListener
         System.out.println( "<<" + evento.getActionCommand() + ">>" );
 
         if (evento.getActionCommand().equals("Salir")) {
+
             System.exit(1);
+
         } else if( evento.getActionCommand().equals("Conectar") ) {
+
             usuario = vista.getUsuario();
             System.out.println( "Registrarse como usuario: " + usuario );
-            modelo.registraUsuario( usuario );
+            try {
+                modelo.registraUsuario( usuario );
+            } catch (RemoteException e) {
+                System.err.println("Client exception: " + e.toString());
+                e.printStackTrace();
+            }
+
         } else if( evento.getActionCommand().equals("Poner a la venta") ) {
+
             usuario = vista.getUsuario();
             producto = vista.getProducto();
             monto = vista.getPrecioInicial();
             System.out.println( "Haciendo oferta del producto: " + producto );
-            modelo.agregaProductoALaVenta( usuario, producto, monto );
+            try {
+                modelo.agregaProductoALaVenta( usuario, producto, monto );
+            } catch (RemoteException e) {
+                System.err.println("Client exception: " + e.toString());
+                e.printStackTrace();
+            }
+
         } else if( evento.getActionCommand().equals("Obtener lista") ) {
-            Vector <InformacionProducto> lista = modelo.obtieneCatalogo();
-            Enumeration <InformacionProducto> it;
-            InformacionProducto info;
-            listaConPrecios = new Hashtable<String,String>();
-            vista.reinicializaListaProductos();
-            it = lista.elements();
-            while (it.hasMoreElements()) {
-                info = (InformacionProducto) it.nextElement();            
-                listaConPrecios.put( info.producto,String.valueOf(info.precioActual) );
-                vista.agregaProducto( info.producto );
+
+            Vector<InformacionProducto> lista;
+            try {
+                lista = modelo.obtieneCatalogo();
+                Enumeration <InformacionProducto> it;
+                InformacionProducto info;
+                listaConPrecios = new Hashtable<String,String>();
+                vista.reinicializaListaProductos();
+                it = lista.elements();
+                while (it.hasMoreElements()) {
+                    info = (InformacionProducto) it.nextElement();            
+                    listaConPrecios.put( info.producto,String.valueOf(info.precioActual) );
+                    vista.agregaProducto( info.producto );
+                }
+            } catch (RemoteException e) {
+                System.err.println("Client exception: " + e.toString());
+                e.printStackTrace();
             }
         } else if( evento.getActionCommand().equals("Ofrecer") ) {
+
             producto = vista.getProductoSeleccionado();
             monto = vista.getMontoOfrecido();
             usuario = vista.getUsuario();
-            modelo.agregaOferta( usuario, producto, monto );
+            try {
+                modelo.agregaOferta( usuario, producto, monto );
+            } catch (RemoteException e) {
+                System.err.println("Client exception: " + e.toString());
+                e.printStackTrace();
+            }
         }
     }
 
@@ -76,9 +109,8 @@ public class SubastaControlador implements ActionListener, ListSelectionListener
                 }
             }
         } catch (ClassCastException exception) {
+
             System.out.println(exception.getMessage());
         }
-    }
-
-    
+    }   
 }
